@@ -2,12 +2,13 @@
 Summary:	A general, open source, retargetable decompiler of native executable files
 Summary(pl):	Ogólny, otwarty dekompilator natywnych plików wykonywalnych
 Name:		boomerang
-Version:	0.0.0.20040707
+Version:	0.0.0.20040708
 Release:	0.1
 License:	GPL
 Group:		Development/Languages
 Source0:	%{name}.tar.gz
-# Source0-md5:	97d2b1825b3e2d5bcd85df48eb15a45e
+# Source0-md5:	a9f15806eb670686869f67a06e8a6fbb
+Patch0:		%{name}-path.patch
 URL:		http://boomerang.sourceforge.net/
 %if %{with flex_bison_c++}
 BuildRequires:	bison++
@@ -18,6 +19,8 @@ BuildRequires:	expat-devel
 BuildRequires:	gc-devel
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		no_install_post_chrpath		1
 
 %description
 An attempt to develop a real decompiler through the open source
@@ -62,9 +65,11 @@ wymagaj± interwencji eksperta.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1
 
 %build
-rm -rf */CVS
+find . -type d -name CVS -exec rm -rf "{}" ";" 2> /dev/null || :
+find . -type f -name 'Makefile*' -exec sed -i -e 's#^BOOMDIR=.*#BOOMDIR=%{_libdir}/%{name}#g' "{}" ";"
 
 ln -s %{_includedir}/cppunit include/cppunit
 %configure
@@ -79,11 +84,13 @@ ln -s %{_includedir}/cppunit include/cppunit
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir},%{_datadir}/%{name},%{_bindir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/frontend/machine}
 
 install %{name} $RPM_BUILD_ROOT%{_bindir}
-cp -a signatures transformations $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a lib $RPM_BUILD_ROOT%{_libdir}/%{name}
+cp -a signatures transformations $RPM_BUILD_ROOT%{_libdir}/%{name}
+cp -a frontend/machine/* $RPM_BUILD_ROOT%{_libdir}/%{name}/frontend/machine
+find $RPM_BUILD_ROOT%{_libdir}/%{name}/frontend/machine -type f ! -name '*.ssl' -exec rm -f "{}" ";"
+cp -a lib $RPM_BUILD_ROOT%{_libdir}/%{name}/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -91,6 +98,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/%{name}
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/*.so
+%dir %{_libdir}/%{name}/*
+%attr(755,root,root) %{_libdir}/%{name}/lib/*.so
+%dir %{_libdir}/%{name}/frontend/machine
+%dir %{_libdir}/%{name}/frontend/machine/*
+%{_libdir}/%{name}/frontend/machine/*/*.ssl
+%{_libdir}/%{name}/signatures/*
+%{_libdir}/%{name}/transformations/*
