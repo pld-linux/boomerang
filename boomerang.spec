@@ -1,15 +1,20 @@
-%bcond_with	flex_bison_c++
+#
+# Conditional build:
+%bcond_with	flex_bison_c++	# use flex++/bison++
+#
 Summary:	A general, open source, retargetable decompiler of native executable files
 Summary(pl):	Ogólny, otwarty dekompilator natywnych plików wykonywalnych
 Name:		boomerang
 Version:	0.0.0.20040708
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Development/Languages
 Source0:	%{name}.tar.gz
 # Source0-md5:	a9f15806eb670686869f67a06e8a6fbb
 Patch0:		%{name}-path.patch
+Patch1:		%{name}-types.patch
 URL:		http://boomerang.sourceforge.net/
+BuildRequires:	automake
 %if %{with flex_bison_c++}
 BuildRequires:	bison++
 BuildRequires:	flex
@@ -66,12 +71,14 @@ wymagaj± interwencji eksperta.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
-%build
 find . -type d -name CVS -exec rm -rf "{}" ";" 2> /dev/null || :
 find . -type f -name 'Makefile*' -exec sed -i -e 's#^BOOMDIR=.*#BOOMDIR=%{_libdir}/%{name}#g' "{}" ";"
 
-ln -s %{_includedir}/cppunit include/cppunit
+%build
+ln -sf %{_includedir}/cppunit include/cppunit
+cp -f /usr/share/automake/config.* .
 %configure
 
 %if ! %{with flex_bison_c++}
@@ -99,10 +106,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/*
+%dir %{_libdir}/%{name}/lib
 %attr(755,root,root) %{_libdir}/%{name}/lib/*.so
+%dir %{_libdir}/%{name}/frontend
 %dir %{_libdir}/%{name}/frontend/machine
 %dir %{_libdir}/%{name}/frontend/machine/*
 %{_libdir}/%{name}/frontend/machine/*/*.ssl
-%{_libdir}/%{name}/signatures/*
-%{_libdir}/%{name}/transformations/*
+%{_libdir}/%{name}/signatures
+%{_libdir}/%{name}/transformations
