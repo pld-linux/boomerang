@@ -1,3 +1,4 @@
+%bcond_with	flex_bison_c++
 Summary:	An attempt at a general, open source, retargetable decompiler of native executable files
 Name:		boomerang
 Version:	0.0.0.20040707
@@ -7,8 +8,10 @@ Group:		Development/Languages
 Source0:	%{name}.tar.gz
 # Source0-md5:	97d2b1825b3e2d5bcd85df48eb15a45e
 URL:		http://boomerang.sourceforge.net/
+%if %{with flex_bison_c++}
 BuildRequires:	bison++
 BuildRequires:	flex
+%endif
 BuildRequires:	gc-devel
 BuildRequires:	cppunit-devel
 BuildRequires:	expat-devel
@@ -39,8 +42,14 @@ expert intervention.
 %setup -q -n %{name}
 
 %build
+rm -rf */CVS
+
 ln -s %{_includedir}/cppunit include/cppunit
 %configure
+
+%if ! %{with flex_bison_c++}
+%{__make} remote
+%endif
 
 %{__make} \
 	C="%{__cc} %{rpmcflags} -I%{_includedir}/gc" \
@@ -48,14 +57,18 @@ ln -s %{_includedir}/cppunit include/cppunit
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp
+install -d $RPM_BUILD_ROOT{%{_libdir},%{_datadir}/%{name},%{_bindir}}
 
-%{__make} install \
-	DESTDIR="$RPM_BUILD_ROOT"
-
+install %{name} $RPM_BUILD_ROOT%{_bindir}
+cp -a signatures transformations $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a lib $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/*
+%{_datadir}/%{name}
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/*.so
