@@ -1,0 +1,33 @@
+--- boomerang/db/proc.cpp.orig	2004-07-07 07:10:41.000000000 +0200
++++ boomerang/db/proc.cpp	2004-07-11 14:20:40.687669819 +0200
+@@ -3386,7 +3386,7 @@
+             LOG << "** Could not solve type constraints for proc " <<
+               getName() << "!\n";
+         else if (solns.size() > 1)
+-            LOG << "** " << solns.size() << " solutions to type "
++            LOG << "** " << (int)solns.size() << " solutions to type "
+               "constraints for proc " << getName() << "!\n";
+     }
+         
+--- boomerang/db/statement.cpp.orig	2004-06-29 11:53:44.000000000 +0200
++++ boomerang/db/statement.cpp	2004-07-11 14:24:18.066533773 +0200
+@@ -1424,7 +1424,7 @@
+     } else {
+         std::vector<Exp*> &params = proc->getProg()->getDefaultParams();
+         if (params.size() != implicitArguments.size()) {
+-            LOG << "eep. " << implicitArguments.size() << " args ";
++            LOG << "eep. " << (int)implicitArguments.size() << " args ";
+             if (procDest) {
+                 LOG << procDest->getName() << " ";
+                 LOG << "(" << procDest->getSignature()->getNumParams()
+--- boomerang/db/signature.cpp.orig	2004-07-08 23:56:27.000000000 +0200
++++ boomerang/db/signature.cpp	2004-07-11 14:28:48.280719124 +0200
+@@ -394,7 +394,7 @@
+             Location::memOf(Location::regOf(28)));
+     static Assign *fixesp = new Assign(Location::regOf(28),
+             new Binary(opPlus, Location::regOf(28),
+-                new Const(4 + params.size()*4)));
++                new Const(4 + (unsigned int)params.size()*4)));
+     stmts.append((Assign*)fixpc->clone());
+     stmts.append((Assign*)fixesp->clone());
+ }
