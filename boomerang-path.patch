@@ -19,7 +19,19 @@ diff -urN boomerang.org/boomerang.cpp boomerang/boomerang.cpp
 -        std::cerr << "? No slash in argv[0]!" << std::endl;
 -        return 1;
 -    }
-+    progPath = BOOMDIR + "/";
++    progPath = BOOMDIR "/";
      outputPath = "./";
  
      // Parse switches on command line
+diff -urN boomerang.org/Makefile.in boomerang/Makefile.in
+--- boomerang.org/Makefile.in	2004-07-09 00:22:50.487941520 +0200
++++ boomerang/Makefile.in	2004-07-09 00:47:53.197494944 +0200
+@@ -178,7 +178,7 @@
+ 
+ # Compile ordinary files
+ $(STATIC_OBJS): %.o : %.cpp
+-	$(CC) -c -o $@ -Iinclude $(EXTRA) $<
++	$(CC) -c -o $@ -Iinclude $(BOOMSET) $(EXTRA) $<
+ 
+ $(TEST_OBJS): %.o : %.cpp
+ 	$(CC) -c -o $@ -Iinclude $(EXTRA) $<
