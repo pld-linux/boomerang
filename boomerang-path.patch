@@ -1,0 +1,25 @@
+diff -urN boomerang.org/boomerang.cpp boomerang/boomerang.cpp
+--- boomerang.org/boomerang.cpp	2004-07-09 00:22:50.488941368 +0200
++++ boomerang/boomerang.cpp	2004-07-09 00:37:52.418827184 +0200
+@@ -212,20 +212,7 @@
+ int Boomerang::commandLine(int argc, const char **argv) 
+ {
+     if (argc < 2) usage();
+-    progPath = argv[0];
+-    // Chop off after the last slash
+-    size_t j = progPath.rfind("/");
+-    if (j == (size_t)-1) 
+-        j = progPath.rfind("\\");
+-    if (j != (size_t)-1)
+-    {
+-        // Do the chop; keep the trailing slash
+-        progPath = progPath.substr(0, j+1);
+-    }
+-    else {
+-        std::cerr << "? No slash in argv[0]!" << std::endl;
+-        return 1;
+-    }
++    progPath = BOOMDIR + "/";
+     outputPath = "./";
+ 
+     // Parse switches on command line
