@@ -8,8 +8,9 @@ Source0:	%{name}.tar.gz
 # Source0-md5:	97d2b1825b3e2d5bcd85df48eb15a45e
 URL:		http://boomerang.sourceforge.net/
 BuildRequires:	bison++
-BuildRequires:	flexx++
-BuildRequires:	cppunit
+BuildRequires:	flex
+BuildRequires:	gc-devel
+BuildRequires:	cppunit-devel
 BuildRequires:	expat-devel
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -38,11 +39,12 @@ expert intervention.
 %setup -q -n %{name}
 
 %build
+ln -s %{_includedir}/cppunit include/cppunit
 %configure
 
 %{__make} \
-	C="%{__cc}" \
-	CC="%{__cxx}"
+	C="%{__cc} %{rpmcflags} -I%{_includedir}/gc" \
+	CC="%{__cxx} %{rpmcflags} -I%{_includedir}/gc"
 
 %install
 rm -rf $RPM_BUILD_ROOT
