@@ -23,6 +23,7 @@ BuildRequires:	cppunit-devel
 BuildRequires:	expat-devel
 BuildRequires:	gc-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		no_install_post_chrpath		1
