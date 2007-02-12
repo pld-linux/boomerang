@@ -3,7 +3,7 @@
 %bcond_with	flex_bison_c++	# use flex++/bison++
 #
 Summary:	A general, open source, retargetable decompiler of native executable files
-Summary(pl.UTF-8):   Ogólny, otwarty dekompilator natywnych plików wykonywalnych
+Summary(pl.UTF-8):	Ogólny, otwarty dekompilator natywnych plików wykonywalnych
 Name:		boomerang
 Version:	0.0.0.20040708
 Release:	0.2
