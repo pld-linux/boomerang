@@ -3,7 +3,7 @@
 %bcond_with	flex_bison_c++	# use flex++/bison++
 #
 Summary:	A general, open source, retargetable decompiler of native executable files
-Summary(pl):	Ogólny, otwarty dekompilator natywnych plików wykonywalnych
+Summary(pl.UTF-8):   OgÃ³lny, otwarty dekompilator natywnych plikÃ³w wykonywalnych
 Name:		boomerang
 Version:	0.0.0.20040708
 Release:	0.2
@@ -48,26 +48,26 @@ interactive, a la IDA Pro, because some things (not just variable
 names and comments, though these are obviously very important) require
 expert intervention.
 
-%description -l pl
-Próba stworzenia prawdziwego dekompilatora przez spo³eczno¶æ otwartego
-oprogramowania. Dekompilator przyjmuje na wej¶ciu plik wykonywalny i
-próbuje stworzyæ kompilowalny, a nawet zarz±dzalny, plik ¼ród³owy w
-jêzyku wy¿szego poziomu wykonuj±cy to samo zadanie. Jest to wiêc
-przeciwieñstwo kompilatora, który oczywi¶cie przyjmuje plik ¼ród³owy i
-tworzy wykonywalny. Oczywi¶cie dekompilator nie odtworzy oryginalnego
-pliku ¼ród³owego; raczej nic z tych rzeczy. Nie ma znaczenia, czy plik
-wykonywalny ma symbole czy nie, ani czy zosta³ skompilowany z jakiego¶
-konkretnego jêzyka (jednak jêzyki w rodzaju ML, które s± zwykle
-interpretowane, nie s± brane pod uwagê).
+%description -l pl.UTF-8
+PrÃ³ba stworzenia prawdziwego dekompilatora przez spoÅ‚ecznoÅ›Ä‡ otwartego
+oprogramowania. Dekompilator przyjmuje na wejÅ›ciu plik wykonywalny i
+prÃ³buje stworzyÄ‡ kompilowalny, a nawet zarzÄ…dzalny, plik ÅºrÃ³dÅ‚owy w
+jÄ™zyku wyÅ¼szego poziomu wykonujÄ…cy to samo zadanie. Jest to wiÄ™c
+przeciwieÅ„stwo kompilatora, ktÃ³ry oczywiÅ›cie przyjmuje plik ÅºrÃ³dÅ‚owy i
+tworzy wykonywalny. OczywiÅ›cie dekompilator nie odtworzy oryginalnego
+pliku ÅºrÃ³dÅ‚owego; raczej nic z tych rzeczy. Nie ma znaczenia, czy plik
+wykonywalny ma symbole czy nie, ani czy zostaÅ‚ skompilowany z jakiegoÅ›
+konkretnego jÄ™zyka (jednak jÄ™zyki w rodzaju ML, ktÃ³re sÄ… zwykle
+interpretowane, nie sÄ… brane pod uwagÄ™).
 
-Intencj± jest stworzenie dekompilatora dla wielu architektur (czyli
-takiego, który mo¿e dzia³aæ z ró¿nymi rodzajami wej¶ciowych plików
+IntencjÄ… jest stworzenie dekompilatora dla wielu architektur (czyli
+takiego, ktÃ³ry moÅ¼e dziaÅ‚aÄ‡ z rÃ³Å¼nymi rodzajami wejÅ›ciowych plikÃ³w
 wykonywalnych z przyzwoitym efektem, np. x86-windows, sparc-solaris
-itp.). Bêdzie bardzo modularny, wiêc wiele czê¶ci dekompilatora mo¿e
-zostaæ zast±piona eksperymentalnymi modu³ami. Byæ mo¿e stanie siê
-interaktywny, jak IDA Pro, poniewa¿ niektóre rzeczy (nie tylko nazwy
-zmiennych i komentarze, chocia¿ te s± oczywi¶cie bardzo wa¿ne)
-wymagaj± interwencji eksperta.
+itp.). BÄ™dzie bardzo modularny, wiÄ™c wiele czÄ™Å›ci dekompilatora moÅ¼e
+zostaÄ‡ zastÄ…piona eksperymentalnymi moduÅ‚ami. ByÄ‡ moÅ¼e stanie siÄ™
+interaktywny, jak IDA Pro, poniewaÅ¼ niektÃ³re rzeczy (nie tylko nazwy
+zmiennych i komentarze, chociaÅ¼ te sÄ… oczywiÅ›cie bardzo waÅ¼ne)
+wymagajÄ… interwencji eksperta.
 
 %prep
 %setup -q -n %{name}
